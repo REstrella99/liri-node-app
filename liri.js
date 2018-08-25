@@ -1,28 +1,28 @@
 var keys = require("./keys.js");
 
-var request = require('request');
-var Twitter = require('twitter');
+var req = require('request');
+var Twitr = require('twitter');
 var Spotify = require('node-spotify-api');
 var fs = require('fs');
 var client = new Twitter(keys.twitterKeys);
 var input = process.argv;
-var action = input[2];
-var inputs = input[3];
+var perf = input[2];
+var textinput = input[3];
 
 switch (action) {
-	case "my-tweets":
+	case "tweet":
 	twitter(inputs);
 	break;
 
-	case "spotify-this-song":
+	case "spotify":
 	spotify(inputs);
 	break;
 
-	case "movie-this":
+	case "movie":
 	movie(inputs);
 	break;
 
-	case "do-what-it-says":
+	case "doit":
 	doit();
 	break;
 };
@@ -85,17 +85,17 @@ function movie(inputs) {
 	});
 };
 
-function doit() {
+function perform() {
 	fs.readFile('random.txt', "utf8", function(error, data){
 
 		if (error) {
     		return console.log(error);
   		}
 
-		// Then split it by commas (to make it more readable)
+		
 		var dataArr = data.split(",");
 
-		// Each command is represented. Because of the format in the txt file, remove the quotes to run these commands. 
+	 
 		if (dataArr[0] === "spotify-this-song") {
 			var songcheck = dataArr[1].slice(1, -1);
 			spotify(songcheck);
